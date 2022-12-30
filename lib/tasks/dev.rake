@@ -2,6 +2,13 @@ namespace :dev do
   desc "Configura o ambiente de desenvolvimento"
   task setup: :environment do
 
+    Contact.all.each do |contact|
+      Random.rand(5).times do |i|
+        contact.phones << Phone.create!(number: Faker::PhoneNumber.cell_phone)
+        contact.save!
+      end
+    end
+
     kinds = %w(Amigo Comercial Conhecido)
     kinds.each do |kind|
       Kind.create!(description: kind)

@@ -10,12 +10,12 @@ class ContactsController < ApplicationController
     # except: Não retorna tal campo
     # Render por maps - render json: @contacts.map { |contact| contact.attributes.merge({ author: Faker::Name.name })}
 
-    render json: @contacts, status: :partial_content, methods: :author
+    render json: @contacts, include: [:kind, :phones] #[:hello, :i18n, :birthdate_br] #, status: :partial_content, methods: :author
   end
 
   # GET /contacts/1
   def show
-    render json: @contact
+    render json: @contact.to_br
   end
 
   # POST /contacts
@@ -51,6 +51,6 @@ class ContactsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def contact_params
-      params.require(:contact).permit(:name, :email, :birthdate)
+      params.require(:contact).permit(:name, :email, :birthdate, :kind_id)
     end
 end
