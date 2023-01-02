@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class KindTest < ActiveSupport::TestCase
+class AddressTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

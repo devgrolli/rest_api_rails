@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class Phone < ApplicationRecord
+class Address < ApplicationRecord
   belongs_to :contact, optional: true
 end
