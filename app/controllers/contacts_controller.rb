@@ -12,7 +12,7 @@ class ContactsController < ApplicationController
 
   # GET /contacts/1
   def show
-    render json: @contact, include: [:kind], meta: { author: 'jackson fire' }
+    render json: @contact, include: [:kind, :address, :phones], meta: { author: 'jackson fire' }
   end
 
   # POST /contacts
@@ -20,7 +20,7 @@ class ContactsController < ApplicationController
     @contact = Contact.new(contact_params)
 
     if @contact.save
-      render json: @contact, include: %i[kind phones address], status: :created, location: @contact
+      render json: @contact, include: [:kind, :phones, :address], status: :created, location: @contact
     else
       render json: @contact.errors, status: :unprocessable_entity
     end
@@ -49,13 +49,6 @@ class ContactsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def contact_params
-    params.require(:contact).permit(
-      :name,
-      :email,
-      :birthdate,
-      :kind_id,
-      phones_attributes: %i[id number _destroy],
-      address_attributes: %i[id street city]
-    )
+    ActiveModelSerializers::Deserialization.jsonapi_parse(params)
   end
 end
