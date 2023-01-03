@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Contact < ApplicationRecord
   # associações
   belongs_to :kind, optional: true
